@@ -1,8 +1,8 @@
 #include "../pipex.h"
 
-static int		ft_word_len(const char *s, char c)
+static int	ft_word_len(const char *s, char c)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	while (s[i] && s[i] != c)
@@ -10,10 +10,10 @@ static int		ft_word_len(const char *s, char c)
 	return (i);
 }
 
-static int		ft_word_count(const char *s, char c)
+static int	ft_word_count(const char *s, char c)
 {
-	int			i;
-	int			j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -30,10 +30,10 @@ static int		ft_word_count(const char *s, char c)
 	return (i);
 }
 
-static char		**ft_fill(char **str, char *s, char ch, int len)
+static char	**ft_fill(char **str, char *s, char ch, int len)
 {
-	int			i;
-	int			g;
+	int	i;
+	int	g;
 
 	i = 0;
 	while (i < len)
@@ -52,19 +52,17 @@ static char		**ft_fill(char **str, char *s, char ch, int len)
 	return (str);
 }
 
-char			**ft_split(char *s, char c)
+char	**ft_split(char *s, char c)
 {
-	int			len;
-	char		**res;
+	int		len;
+	char	**res;
 
 	if (!s)
 		return (NULL);
 	len = ft_word_count(s, c);
-	if (!(res = (char**)malloc(sizeof(char*) * (len + 1))))
+	res = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!res)
 		return (NULL);
 	res = ft_fill(res, s, c, len);
-	int i = 0;
-	while (res[i])
-		++i;
 	return (res);
 }

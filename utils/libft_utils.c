@@ -2,12 +2,12 @@
 
 int32_t	ft_strncmp(const char *s1, const char *s2, int32_t n)
 {
-	int32_t	i;
+	int32_t			i;
 	unsigned char	*str1;
 	unsigned char	*str2;
 
-	str1 = (unsigned char*)s1;
-	str2 = (unsigned char*)s2;
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
 	i = 0;
 	if (n == 0)
 		return (0);
@@ -34,7 +34,8 @@ char	*ft_substr(char const *s, unsigned int start, int32_t len)
 	i = 0;
 	if (start >= strlen(s))
 		return (strdup(""));
-	if (!(substr = (char*)malloc(sizeof(char) * (len + 1))))
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (!substr)
 		return (NULL);
 	while (len > 0 && s[j])
 	{
@@ -47,16 +48,15 @@ char	*ft_substr(char const *s, unsigned int start, int32_t len)
 	return (substr);
 }
 
-char				*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	char			*new;
-	char			*tmp;
-	int				i;
+	char	*new;
+	char	*tmp;
+	int		i;
 
 	i = 0;
-	if (!s1 && !s2)
-		return (NULL);
-	if (!(new = calloc(sizeof(char), (strlen(s1) + strlen(s2) + 1))))
+	new = calloc(sizeof(char), (strlen(s1) + strlen(s2) + 1));
+	if (!new)
 		return (NULL);
 	tmp = new;
 	while (s1 && s1[i])

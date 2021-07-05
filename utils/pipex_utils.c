@@ -2,7 +2,7 @@
 
 int8_t	find_space(char *str)
 {
-	int32_t i;
+	int32_t	i;
 
 	i = 0;
 	while (str[i])
@@ -14,7 +14,7 @@ int8_t	find_space(char *str)
 	return (0);
 }
 
-int8_t	check_files(char *file_one, char *file_two)
+void	check_files(char *file_one, char *file_two, t_pipex *pipex)
 {
 	int32_t	check_one;
 	int32_t	check_two;
@@ -22,8 +22,7 @@ int8_t	check_files(char *file_one, char *file_two)
 	check_one = access(file_one, R_OK | W_OK);
 	check_two = access(file_two, R_OK | W_OK);
 	if (check_one || check_two)
-		handle_errors(WRONG_FILES);
-	return (1);
+		handle_errors(WRONG_FILES, pipex);
 }
 
 void	find_path(char **env, t_pipex *pipex)
@@ -44,7 +43,7 @@ void	find_path(char **env, t_pipex *pipex)
 
 int8_t	find_prog(t_pipex *pipex, char **prog)
 {
-	int32_t i;
+	int32_t	i;
 	char	*tmp;
 
 	i = 0;
@@ -56,9 +55,11 @@ int8_t	find_prog(t_pipex *pipex, char **prog)
 		tmp = ft_strjoin(tmp, *prog);
 		if (!access(tmp, X_OK))
 		{
+			free(*prog);
 			*prog = tmp;
 			return (0);
 		}
+		free(tmp);
 		++i;
 	}
 	return (1);
