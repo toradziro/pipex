@@ -39,7 +39,7 @@ void	init_pipex(char **argv, t_pipex *pipex, char **env)
 	pipex->file1 = argv[1];
 	pipex->file2 = argv[4];
 	parse_prog_args(pipex);
-	pipefd = (int32_t *)malloc(sizeof(int32_t) * 2);
+	pipefd = (int32_t *)calloc(sizeof(int32_t) * 2);
 	if (!pipefd)
 		handle_errors(MALLOC_ERROR, pipex);
 	if (find_prog(pipex, &pipex->cmd_1) || find_prog(pipex, &pipex->cmd_2))
