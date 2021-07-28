@@ -34,12 +34,12 @@ void	init_pipex(char **argv, t_pipex *pipex, char **env)
 	int32_t	*pipefd;
 
 	find_path(env, pipex);
-	pipex->cmd_1 = argv[2];
-	pipex->cmd_2 = argv[3];
-	pipex->file1 = argv[1];
-	pipex->file2 = argv[4];
+	pipex->cmd_1 = strdup(argv[2]);
+	pipex->cmd_2 = strdup(argv[3]);
+	pipex->file1 = strdup(argv[1]);
+	pipex->file2 = strdup(argv[4]);
 	parse_prog_args(pipex);
-	pipefd = (int32_t *)calloc(sizeof(int32_t) * 2);
+	pipefd = (int32_t *)calloc(sizeof(int32_t), 2);
 	if (!pipefd)
 		handle_errors(MALLOC_ERROR, pipex);
 	if (find_prog(pipex, &pipex->cmd_1) || find_prog(pipex, &pipex->cmd_2))
@@ -54,12 +54,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_pipex	*pipex;
 
-	pipex = (t_pipex *)malloc(sizeof(t_pipex) * 1);
+	pipex = (t_pipex *)calloc(sizeof(t_pipex), 1);
 	if (!pipex)
 		handle_errors(MALLOC_ERROR, pipex);
 	if (argc != 5)
 		handle_errors(WRONG_ARGS_AMOUNT, pipex);
-	check_files(argv[1], argv[4], pipex);
 	init_pipex(argv, pipex, env);
 	free_pipe(pipex);
 	return (0);

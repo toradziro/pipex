@@ -28,8 +28,6 @@ typedef struct s_pipex {
 
 char	**ft_split(char *s, char c);
 char	*ft_substr(char const *s, unsigned int start, int32_t len);
-void	check_files(char *file_one, char *file_two, t_pipex *pipex);
-int32_t	ft_strncmp(const char *s1, const char *s2, int32_t n);
 void	find_path(char **env, t_pipex *pipex);
 char	*ft_strjoin(char *s1, char *s2);
 int8_t	find_prog(t_pipex *pipex, char **prog);
@@ -39,5 +37,6 @@ void	handle_errors(int32_t err_code, t_pipex *pipex);
 void	open_files(t_pipex *pipex);
 void	start_pipex(t_pipex *pipex, int32_t *pipefd);
 void	free_pipe(t_pipex *pipex);
+void	free_db_arr(char **arr);
 
 #endif

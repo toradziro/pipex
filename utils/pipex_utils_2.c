@@ -5,12 +5,22 @@ void	parse_prog_args(t_pipex *pipex)
 	if (find_space(pipex->cmd_1))
 	{
 		pipex->cmd_1_arg = ft_split(pipex->cmd_1, ' ');
-		pipex->cmd_1 = pipex->cmd_1_arg[0];
+		pipex->cmd_1 = strdup(pipex->cmd_1_arg[0]);
+	}
+	else
+	{
+		pipex->cmd_1_arg = (char **)calloc(sizeof(char *), 2);
+		pipex->cmd_1_arg[0] = strdup(pipex->cmd_1);
 	}
 	if (find_space(pipex->cmd_2))
 	{
 		pipex->cmd_2_arg = ft_split(pipex->cmd_2, ' ');
-		pipex->cmd_2 = pipex->cmd_2_arg[0];
+		pipex->cmd_2 = strdup(pipex->cmd_2_arg[0]);
+	}
+	else
+	{
+		pipex->cmd_2_arg = (char **)calloc(sizeof(char *), 2);
+		pipex->cmd_2_arg[0] = strdup(pipex->cmd_2);
 	}
 }
 

@@ -34,7 +34,7 @@ char	*ft_substr(char const *s, unsigned int start, int32_t len)
 	i = 0;
 	if (start >= strlen(s))
 		return (strdup(""));
-	substr = (char *)malloc(sizeof(char) * (len + 1));
+	substr = (char *)calloc(sizeof(char), (len + 1));
 	if (!substr)
 		return (NULL);
 	while (len > 0 && s[j])
@@ -52,7 +52,7 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*new;
 	char	*tmp;
-	int		i;
+	int32_t i;
 
 	i = 0;
 	new = calloc(sizeof(char), (strlen(s1) + strlen(s2) + 1));

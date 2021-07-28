@@ -60,7 +60,7 @@ char	**ft_split(char *s, char c)
 	if (!s)
 		return (NULL);
 	len = ft_word_count(s, c);
-	res = (char **)malloc(sizeof(char *) * (len + 1));
+	res = (char **)calloc(sizeof(char *), (len + 1));
 	if (!res)
 		return (NULL);
 	res = ft_fill(res, s, c, len);
