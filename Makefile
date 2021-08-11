@@ -13,7 +13,7 @@ SRC_D =	$(SRCS:.c=.d)
 
 CC =	gcc
 
-FLAGS =	-MMD -g -fsanitize=leak
+FLAGS = -Wall -Wextra -Werror -MMD -g
 
 .c.o:
 		$(CC) $(FLAGS) -c $< -o ${<:.c=.o}

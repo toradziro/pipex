@@ -30,9 +30,9 @@ void	open_files(t_pipex *pipex)
 	int32_t	fd_two;
 
 	fd_one = open(pipex->file1, O_CREAT | O_RDWR);
-	fd_two = open(pipex->file2, O_CREAT | O_RDWR | O_TRUNC);
+	fd_two = open(pipex->file2, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_one == -1 || fd_two == -1)
-		handle_errors(FATAL_ERROR, pipex);
+		handle_errors(pipex);
 	pipex->fd_1_file = fd_one;
 	pipex->fd_2_file = fd_two;
 }

@@ -7,6 +7,7 @@
 # include <stdint.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <errno.h>
 
 # define MALLOC_ERROR -1
 # define WRONG_ARGS_AMOUNT -2
@@ -15,15 +16,15 @@
 # define FATAL_ERROR -5
 
 typedef struct s_pipex {
-	int8_t	fd_1_file;
-	int8_t	fd_2_file;
+	char	**cmd_1_arg;
+	char	**cmd_2_arg;
+	char	**path;
 	char	*cmd_1;
 	char	*cmd_2;
 	char	*file1;
 	char	*file2;
-	char	**cmd_1_arg;
-	char	**cmd_2_arg;
-	char	**path;
+	int32_t	fd_1_file;
+	int32_t	fd_2_file;
 }				t_pipex;
 
 char	**ft_split(char *s, char c);
@@ -33,7 +34,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int8_t	find_prog(t_pipex *pipex, char **prog);
 int8_t	find_space(char *str);
 void	parse_prog_args(t_pipex *pipex);
-void	handle_errors(int32_t err_code, t_pipex *pipex);
+void	handle_errors(t_pipex *pipex);
 void	open_files(t_pipex *pipex);
 void	start_pipex(t_pipex *pipex, int32_t *pipefd);
 void	free_pipe(t_pipex *pipex);
