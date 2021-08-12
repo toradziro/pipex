@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-void	executor(t_pipex *pipex, int32_t *pipefd, int8_t flag)
+pid_t	executor(t_pipex *pipex, int32_t *pipefd, int8_t flag, char **envp)
 {
 	pid_t	child;
 
@@ -12,33 +12,34 @@ void	executor(t_pipex *pipex, int32_t *pipefd, int8_t flag)
 			close(pipefd[0]);
 			dup2(pipex->fd_1_file, STDIN_FILENO);
 			dup2(pipefd[1], STDOUT_FILENO);
-			execve(pipex->cmd_1, pipex->cmd_1_arg, pipex->path);
+			execve(pipex->cmd_1, pipex->cmd_1_arg, envp);
+			exit(errno);
 		}
 		if (flag == 1)
 		{
 			close(pipefd[1]);
 			dup2(pipefd[0], STDIN_FILENO);
 			dup2(pipex->fd_2_file, STDOUT_FILENO);
-			execve(pipex->cmd_2, pipex->cmd_2_arg, pipex->path);
+			execve(pipex->cmd_2, pipex->cmd_2_arg, envp);
+			exit(errno);
 		}
 	}
-	else if (child > 0)
-		waitpid(child, NULL, 0);
 	else if (child == -1)
 		handle_errors(pipex);
+	return (child);
 }
 
-void	start_pipex(t_pipex *pipex, int32_t *pipefd)
+void	start_pipex(t_pipex *pipex, int32_t *pipefd, char **envp)
 {
-	executor(pipex, pipefd, 0);
-	executor(pipex, pipefd, 1);
+	executor(pipex, pipefd, 0, envp);
+	executor(pipex, pipefd, 1, envp);
 }
 
-void	init_pipex(char **argv, t_pipex *pipex, char **env)
+void	init_pipex(char **argv, t_pipex *pipex, char **envp)
 {
 	int32_t	*pipefd;
 
-	find_path(env, pipex);
+	find_path(envp, pipex);
 	pipex->cmd_1 = strdup(argv[2]);
 	pipex->cmd_2 = strdup(argv[3]);
 	pipex->file1 = strdup(argv[1]);
@@ -51,11 +52,11 @@ void	init_pipex(char **argv, t_pipex *pipex, char **env)
 		handle_errors(pipex);
 	open_files(pipex);
 	pipe(pipefd);
-	start_pipex(pipex, pipefd);
+	start_pipex(pipex, pipefd, envp);
 	free(pipefd);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	*pipex;
 
@@ -64,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 		handle_errors(pipex);
 	if (argc != 5)
 		handle_errors(pipex);
-	init_pipex(argv, pipex, env);
+	init_pipex(argv, pipex, envp);
 	free_pipe(pipex);
 	return (0);
 }

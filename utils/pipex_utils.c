@@ -23,7 +23,7 @@ void	find_path(char **env, t_pipex *pipex)
 	{
 		if (!strncmp(env[i], "PATH", 4))
 		{
-			pipex->path = ft_split(&(env[i][5]), ':');
+			pipex->path = ft_split(getenv("PATH"), ':');
 			return ;
 		}
 		++i;
